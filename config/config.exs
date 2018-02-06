@@ -10,7 +10,9 @@ use Mix.Config
 
 # You can configure for your application as:
 #
-#     config :gen_util, key: :value
+config :gen_util,
+  nil_value: nil,
+  non_nil_value: :ok
 #
 # And access this configuration in your application as:
 #
