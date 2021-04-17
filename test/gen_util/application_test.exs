@@ -1,4 +1,4 @@
-defmodule GenUtilApplicationTest do
+defmodule GenUtil.ApplicationTest do
   use ExUnit.Case
   doctest GenUtil.Application
 
