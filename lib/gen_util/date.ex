@@ -26,10 +26,10 @@ defmodule GenUtil.Date do
       |> Enum.map(fn
         {number, ""} -> number
       end)
+
     case result do
       [month, day, year] -> Date.new(year, month, day)
       _ -> {:error, :invalid_date_format}
     end
   end
-
 end

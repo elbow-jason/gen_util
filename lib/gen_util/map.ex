@@ -1,6 +1,4 @@
 defmodule GenUtil.Map do
-
-
   @doc """
   Any map (atom keyed, string keyed, or struct) into an atom keyed map safely.
   This function will discard any non-existing-atom string keys; this function
@@ -15,6 +13,7 @@ defmodule GenUtil.Map do
   def to_atom_keys(%{:__struct__ => _} = struct) do
     struct
   end
+
   def to_atom_keys(%{} = map) do
     map
     |> Enum.map(fn
@@ -28,23 +27,24 @@ defmodule GenUtil.Map do
     |> Enum.into(%{})
   end
 
-
   @doc """
   The raising version of merge/2. See GenUtil.Map.merge/2.
   """
   def merge!(%{:__struct__ => mod} = struct, %{} = map) do
     try do
       Kernel.struct!(mod)
-      Map.merge(struct, struct_safe_map(map, struct)) 
+      Map.merge(struct, struct_safe_map(map, struct))
     rescue
       # returning anything that errors above gives ZERO guarantees about it's safety.
       # i.e. a Date struct with the `day` set to nil is an error waiting to happen
       # and not knowing where that error came from.
-      _ in ArgumentError -> raise %ArgumentError{
-        message: error_message_enforce_keys(mod)
-      }
-    end 
+      _ in ArgumentError ->
+        raise %ArgumentError{
+          message: error_message_enforce_keys(mod)
+        }
+    end
   end
+
   def merge!(%{} = a, %{} = b) do
     Map.merge(a, b)
   end
@@ -62,7 +62,7 @@ defmodule GenUtil.Map do
       iex> Date.new(2017, 1, 1) |> elem(1) |> GenUtil.Map.merge(%{year: 123})
       {:error, :enforced_keys}
 
-  
+
   """
   def merge(%{:__struct__ => _} = struct, %{} = map) do
     try do
@@ -71,6 +71,7 @@ defmodule GenUtil.Map do
       _ in ArgumentError -> {:error, :enforced_keys}
     end
   end
+
   def merge(%{} = a, %{} = b) do
     Map.merge(a, b)
   end
@@ -90,9 +91,10 @@ defmodule GenUtil.Map do
       # returning anything that errors above gives ZERO guarantees about it's safety.
       # i.e. a Date struct with the `day` set to nil is an error waiting to happen
       # and not knowing where that error came from.
-      _ in ArgumentError -> raise %ArgumentError{
-        message: error_message_enforce_keys(mod)
-      }
+      _ in ArgumentError ->
+        raise %ArgumentError{
+          message: error_message_enforce_keys(mod)
+        }
     end
   end
 
@@ -111,11 +113,11 @@ defmodule GenUtil.Map do
   defp struct_safe_map(orig_map, the_struct) do
     keys =
       the_struct
-      |> Map.from_struct
-      |> Map.keys
+      |> Map.from_struct()
+      |> Map.keys()
+
     orig_map
     |> to_atom_keys
     |> Map.take(keys)
   end
-
 end

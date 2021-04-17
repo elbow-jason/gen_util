@@ -22,9 +22,9 @@ defmodule GenUtil.KeyVal do
   Fetches the value for a specific `key` in the given `map`.
 
   If `map` contains the given `key` then its value is returned in the shape of `{:ok, value}`.
-  
+
   If `map` doesn't contain `key`, `:error` is returned.
-  
+
   ## Examples
 
       iex> KeyVal.fetch(%{a: 1}, :a)
@@ -96,6 +96,7 @@ defmodule GenUtil.KeyVal do
     case fetch(keyval, key) do
       {:ok, val} ->
         val
+
       :error ->
         default
     end
@@ -197,12 +198,13 @@ defmodule GenUtil.KeyVal do
 
   def replace!(props, key, value) when is_list(props) do
     do_replace(props, key, value, false)
-  catch :no_key ->
-    raise %KeyError{key: key, term: props}
+  catch
+    :no_key ->
+      raise %KeyError{key: key, term: props}
   end
 
   defp do_replace([], _key, _value, false) do
-    throw :no_key
+    throw(:no_key)
   end
 
   defp do_replace([], _key, _value, true) do
@@ -219,7 +221,7 @@ defmodule GenUtil.KeyVal do
 
   @doc """
   Copies the key-value of `key` from `source` into `dest` or raises.
-  
+
   Returns `source` with the key-value pair of `key` from `source`.
 
   Raises if `key` does not exist in `source`.
@@ -251,6 +253,7 @@ defmodule GenUtil.KeyVal do
     |> case do
       {:ok, value} ->
         put(dest, key, value)
+
       :error ->
         dest
     end
@@ -259,7 +262,7 @@ defmodule GenUtil.KeyVal do
   @doc """
   Copies the key-value of `key` from `source` into `dest` only if
   `key` exists in `source`.
-  
+
   Returns `source` either unchanged (if the `key` is in source) or
   with the key-value pair of `key` from `source`.
 

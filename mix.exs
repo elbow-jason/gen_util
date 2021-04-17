@@ -6,13 +6,13 @@ defmodule GenUtil.Mixfile do
       app: :gen_util,
       version: "0.2.0",
       elixir: "~> 1.4",
-      build_embedded: Mix.env == :prod,
-      start_permanent: Mix.env == :prod,
+      build_embedded: Mix.env() == :prod,
+      start_permanent: Mix.env() == :prod,
       name: "GenUtil",
       source_url: "https://github.com/elbow-jason/gen_util",
       description: description(),
       package: package(),
-      deps: deps(),
+      deps: deps()
     ]
   end
 
@@ -35,7 +35,7 @@ defmodule GenUtil.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      {:ex_doc, "~> 0.24", only: :dev},
+      {:ex_doc, "~> 0.24", only: :dev}
     ]
   end
 

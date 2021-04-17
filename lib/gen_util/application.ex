@@ -3,8 +3,10 @@ defmodule GenUtil.Application do
     case Application.get_env(app, key) do
       nil ->
         raise %RuntimeError{
-          message: "Config error #{inspect app} #{inspect key} must be configured and cannot be nil."
+          message:
+            "Config error #{inspect(app)} #{inspect(key)} must be configured and cannot be nil."
         }
+
       value ->
         value
     end

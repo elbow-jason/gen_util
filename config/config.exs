@@ -13,6 +13,7 @@ use Mix.Config
 config :gen_util,
   nil_value: nil,
   non_nil_value: :ok
+
 #
 # And access this configuration in your application as:
 #

@@ -17,5 +17,4 @@ defmodule GenUtil.ApplicationTest do
   test "does not raise when get_env! finds a value" do
     assert GenUtil.Application.get_env!(:gen_util, :non_nil_value)
   end
-
 end
